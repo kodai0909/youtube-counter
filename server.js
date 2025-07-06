@@ -10,10 +10,11 @@ app.get('/subscriber-count', async (req, res) => {
   try {
     const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`;
     const response = await axios.get(url);
-    const count = parseInt(response.data.items[0].statistics.subscriberCount, 10);
+    const rawCount = response.data.items[0].statistics.subscriberCount;
+    const cleanCount = parseInt(rawCount.replace(/[^\d]/g, ''), 10); // 数字だけ抽出
 
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-    res.send(String(count)); // 数字だけ返す
+    res.send(cleanCount.toString()); // 数字のみ返す
   } catch (err) {
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.send('0');
