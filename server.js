@@ -13,7 +13,7 @@ app.get('/subscriber-count', async (req, res) => {
     const count = parseInt(response.data.items[0].statistics.subscriberCount, 10);
 
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-    res.send(String(count)); // ここは必ず数字だけを返す
+    res.send(String(count)); // 数字だけ返す
   } catch (err) {
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.send('0');
