@@ -13,13 +13,13 @@ app.get('/subscriber-count', async (req, res) => {
     const count = parseInt(response.data.items[0].statistics.subscriberCount, 10);
 
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-    res.send(count.toString().trim()); // ← ここで「数字だけ」を返す
+    res.send(String(count)); // ここは必ず数字だけを返す
   } catch (err) {
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-    res.send('0'); // エラー時も文字なし・数字のみ
+    res.send('0');
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`✅ Smiirl対応API起動中：http://localhost:${PORT}/subscriber-count`);
+  console.log(`✅ API running at http://localhost:${PORT}/subscriber-count`);
 });
