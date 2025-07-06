@@ -3,7 +3,6 @@ const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// APIキーとチャンネルID（すでに置き換え済み）
 const API_KEY = 'AIzaSyCdPhVXzT5XWIautGgfaum4E-7_5Nwpf-E';
 const CHANNEL_ID = 'UCn4Qwfgvya1RhUHuT6zevcg';
 
@@ -13,13 +12,11 @@ app.get('/subscriber-count', async (req, res) => {
     const response = await axios.get(url);
     const count = parseInt(response.data.items[0].statistics.subscriberCount, 10);
 
-    // Smiirl向けに正確な形式で返す（数字のみ、余計な空白なし）
-    res.setHeader('Content-Type', 'text/plain');
-    res.send(count.toString().trim());
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.send(count.toString().trim()); // ← ここで「数字だけ」を返す
   } catch (err) {
-    // エラー時は "0" を返す（{}対策）
-    res.setHeader('Content-Type', 'text/plain');
-    res.send('0');
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.send('0'); // エラー時も文字なし・数字のみ
   }
 });
 
